@@ -68,6 +68,130 @@ func (m *MarketOrder) ValidateMarketOrder() error {
 	}
 }
 
+type StopLossOrder struct {
+	Symbol     string
+	Side       string
+	Type       string
+	Quantity   float64
+	StopPrice  float64
+	RecvWindow int64
+}
+
+func (m *StopLossOrder) ValidateStopLossOrder() error {
+	switch {
+	case len(m.Symbol) == 0:
+		return errors.New("Order must contain a symbol")
+	case !OrderSideEnum[m.Side]:
+		return errors.New("Invalid or empty order side")
+	case m.Type != "STOP_LOSS":
+		return errors.New("Invalid or empty order side")
+	case m.StopPrice <= 0:
+		return errors.New("Invalid stop price")
+	case m.Quantity <= 0.0:
+		return errors.New("Invalid or empty order quantity")
+	case m.RecvWindow == 0:
+		m.RecvWindow = 5000
+		return nil
+	default:
+		return nil
+	}
+}
+
+
+type StopLossLimitOrder struct {
+	Symbol          string
+	Side            string
+	Type            string
+	IcebergQuantity float64
+	Quantity        float64
+	StopPrice       float64
+	RecvWindow      int64
+}
+
+func (m *StopLossLimitOrder) ValidateStopLossLimitOrder() error {
+	switch {
+	case len(m.Symbol) == 0:
+		return errors.New("Order must contain a symbol")
+	case !OrderSideEnum[m.Side]:
+		return errors.New("Invalid or empty order side")
+	case m.Type != "STOP_LOSS_LIMIT":
+		return errors.New("Invalid or empty order side")
+	case m.StopPrice <= 0:
+		return errors.New("Invalid stop price")
+	case m.IcebergQuantity <= 0:
+		return errors.New("Invalid iceberg quantity")
+	case m.Quantity <= 0.0:
+		return errors.New("Invalid or empty order quantity")
+	case m.RecvWindow == 0:
+		m.RecvWindow = 5000
+		return nil
+	default:
+		return nil
+	}
+}
+
+type ProftTakeOrder struct {
+	Symbol     string
+	Side       string
+	Type       string
+	Quantity   float64
+	StopPrice  float64
+	RecvWindow int64
+}
+
+func (m *ProftTakeOrder) ValidateProfitTakeOrder() error {
+	switch {
+	case len(m.Symbol) == 0:
+		return errors.New("Order must contain a symbol")
+	case !OrderSideEnum[m.Side]:
+		return errors.New("Invalid or empty order side")
+	case m.Type != "STOP_LOSS":
+		return errors.New("Invalid or empty order side")
+	case m.StopPrice <= 0:
+		return errors.New("Invalid stop price")
+	case m.Quantity <= 0.0:
+		return errors.New("Invalid or empty order quantity")
+	case m.RecvWindow == 0:
+		m.RecvWindow = 5000
+		return nil
+	default:
+		return nil
+	}
+}
+
+
+type ProfitTakeLimitOrder struct {
+	Symbol          string
+	Side            string
+	Type            string
+	IcebergQuantity float64
+	Quantity        float64
+	StopPrice       float64
+	RecvWindow      int64
+}
+
+func (m *ProfitTakeLimitOrder) ValidateProfitTakeLimitOrder() error {
+	switch {
+	case len(m.Symbol) == 0:
+		return errors.New("Order must contain a symbol")
+	case !OrderSideEnum[m.Side]:
+		return errors.New("Invalid or empty order side")
+	case m.Type != "STOP_LOSS_LIMIT":
+		return errors.New("Invalid or empty order side")
+	case m.StopPrice <= 0:
+		return errors.New("Invalid stop price")
+	case m.IcebergQuantity <= 0:
+		return errors.New("Invalid iceberg quantity")
+	case m.Quantity <= 0.0:
+		return errors.New("Invalid or empty order quantity")
+	case m.RecvWindow == 0:
+		m.RecvWindow = 5000
+		return nil
+	default:
+		return nil
+	}
+}
+
 // Input for: GET & DELETE /api/v3/order
 type OrderQuery struct {
 	Symbol     string

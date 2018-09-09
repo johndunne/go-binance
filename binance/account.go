@@ -83,6 +83,82 @@ func (b *Binance) PlaceMarketOrder(m MarketOrder) (res PlacedOrder, err error) {
 	return
 }
 
+
+// Place a Stop loss Order
+func (b *Binance) PlaceStopLossOrder(m StopLossOrder) (res PlacedOrder, err error) {
+
+	err = m.ValidateStopLossOrder()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&quantity=%f&recvWindow=%d", m.Symbol, m.Side, m.Type, m.Quantity, m.RecvWindow)
+
+	_, err = b.client.do("POST", reqUrl, "", true, &res)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+
+// Place a Stop loss Order
+func (b *Binance) PlaceStopLossLimitOrder(m StopLossLimitOrder) (res PlacedOrder, err error) {
+
+	err = m.ValidateStopLossLimitOrder()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&quantity=%f&recvWindow=%d", m.Symbol, m.Side, m.Type, m.Quantity, m.RecvWindow)
+
+	_, err = b.client.do("POST", reqUrl, "", true, &res)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+
+// Place a Stop loss Order
+func (b *Binance) PlaceProfitTakeOrder(m ProfitTakeOrder) (res PlacedOrder, err error) {
+
+	err = m.ValidateProfitTakeOrder()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&quantity=%f&recvWindow=%d", m.Symbol, m.Side, m.Type, m.Quantity, m.RecvWindow)
+
+	_, err = b.client.do("POST", reqUrl, "", true, &res)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+
+// Place a Stop loss Order
+func (b *Binance) PlaceProfitTakeLimitOrder(m ProfitTakeLimitOrder) (res PlacedOrder, err error) {
+
+	err = m.ValidateProfitTakeLimitOrder()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&quantity=%f&recvWindow=%d", m.Symbol, m.Side, m.Type, m.Quantity, m.RecvWindow)
+
+	_, err = b.client.do("POST", reqUrl, "", true, &res)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
 // Cancel an Order
 func (b *Binance) CancelOrder(query OrderQuery) (order CanceledOrder, err error) {
 
